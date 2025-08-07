@@ -30,7 +30,7 @@ az extension add -n ml -y
 #RESOURCE_GROUP_NAME="cloudml"
 GROUP="mlops-test"
 LOCATION="eastus"
-WORKSPACE="azureml"
+WORKSPACE="mlops-testing"
 # </set_variables>
 
 
