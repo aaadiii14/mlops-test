@@ -25,5 +25,5 @@ jobs:
         run: bash setup.sh
 
       - name: Run Azure ML pipeline job
-        run: bash jobs/run-job.sh pipeline.yml
+        run: bash ../../run-job.sh pipeline.yml
         working-directory: jobs/pipeline
