@@ -1,25 +1,29 @@
-name: cli-jobs-pipelines-autompg
+name: cli-jobs-pipelines
+
 on:
   push:
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths:
-      - run-job.sh
-      - setup.sh
+      - "run-job.sh"
+      - "setup.sh"
+      - "jobs/pipeline/**"
+
 jobs:
-  build:
+  build-and-run-pipeline:
     runs-on: ubuntu-latest
     steps:
-    - name: check out repo
-      uses: actions/checkout@v2
-    - name: azure login
-      uses: azure/login@v2
-      with:
-        creds: ${{secrets.AZURE_ML_CREDENTIALS}}
-    - name: setup
-      run: bash setup.sh
-      continue-on-error: true
-    - name: run job
-      run: bash -x ../../run-job.sh pipeline.yml
-      working-directory: jobs/pipeline
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_ML_CREDENTIALS }}
+
+      - name: Setup Azure ML CLI and Configure Defaults
+        run: bash setup.sh
+
+      - name: Run Azure ML pipeline job
+        run: bash jobs/run-job.sh pipeline.yml
+        working-directory: jobs/pipeline
